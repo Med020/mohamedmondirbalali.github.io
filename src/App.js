@@ -489,10 +489,44 @@ const Projects = ({ isVisible }) => {
 // Contact Section
 const Contact = ({ isVisible }) => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState({ type: '', message: '' });
+  const [isLoading, setIsLoading] = useState(false);
+  const formRef = useRef();
 
-  const handleSubmit = () => {
-    if (formData.name && formData.email && formData.message) {
-      window.location.href = `mailto:${portfolioData.personal.email}?subject=Message from ${formData.name}&body=${formData.message}`;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setStatus({ type: '', message: '' });
+
+    try {
+      // Using EmailJS
+      const emailjs = (await import('@emailjs/browser')).default;
+      
+      await emailjs.send(
+        'YOUR_SERVICE_ID',      // Replace with your EmailJS Service ID
+        'YOUR_TEMPLATE_ID',     // Replace with your EmailJS Template ID
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+          to_email: 'mohamedbalali02@gmail.com'
+        },
+        'YOUR_PUBLIC_KEY'        // Replace with your EmailJS Public Key
+      );
+
+      setStatus({ 
+        type: 'success', 
+        message: 'Message sent successfully! I\'ll get back to you soon.' 
+      });
+      setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      setStatus({ 
+        type: 'error', 
+        message: 'Failed to send message. Please try again or email me directly.' 
+      });
+      console.error('Email error:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -510,6 +544,7 @@ const Contact = ({ isVisible }) => {
                 onChange={(e) => setFormData({...formData, name: e.target.value})}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                 placeholder="Your name"
+                required
               />
             </div>
             <div>
@@ -520,6 +555,7 @@ const Contact = ({ isVisible }) => {
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                 placeholder="your.email@example.com"
+                required
               />
             </div>
             <div>
@@ -530,11 +566,32 @@ const Contact = ({ isVisible }) => {
                 rows="5"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
                 placeholder="Your message..."
+                required
               />
             </div>
-            <button onClick={handleSubmit} className="w-full px-8 py-3 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-colors duration-200 flex items-center justify-center gap-2">
-              <Mail size={20} />
-              Send Message
+            
+            {status.message && (
+              <div className={`p-4 rounded-lg ${status.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
+                {status.message}
+              </div>
+            )}
+            
+            <button 
+              onClick={handleSubmit} 
+              disabled={isLoading}
+              className={`w-full px-8 py-3 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-colors duration-200 flex items-center justify-center gap-2 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            >
+              {isLoading ? (
+                <>
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                  Sending...
+                </>
+              ) : (
+                <>
+                  <Mail size={20} />
+                  Send Message
+                </>
+              )}
             </button>
           </div>
         </div>
