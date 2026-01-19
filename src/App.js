@@ -179,7 +179,7 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems = ['About', 'Skills', 'Experience', 'Education', 'Projects', 'Contact'];
+  const navItems = ['About', 'Skills', 'Experience', 'Education', 'Projects'];
 
   const scrollToSection = (section) => {
     document.getElementById(section.toLowerCase())?.scrollIntoView({ behavior: 'smooth' });
