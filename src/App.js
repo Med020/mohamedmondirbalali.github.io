@@ -8,8 +8,8 @@ const portfolioData = {
     title: "Full-Stack Developer & Sports Tech Enthusiast",
     email: "mohamedbalali02@gmail.com",
     phone: "+212 618 866 203",
-    linkedin: "https://www.linkedin.com/in/mohamed-mondir-balali-315859266",
-    location: "Casablanca, Morcocco",
+    linkedin: "https://linkedin.com/in/mondir-balali",
+    location: "Settat, Morocco",
     tagline: "Transforming sports through digital innovation and cutting-edge technology",
     about: "Master's student specializing in Digital Transformation and Sports Technologies, with a strong foundation in full-stack development. Passionate about leveraging technology to revolutionize the sports industry, from performance analytics to immersive AR experiences. Proven track record in building robust web and mobile applications using modern frameworks."
   },
@@ -254,10 +254,15 @@ const Hero = () => {
               <Mail size={20} />
               Contact Me
             </button>
-            <button className="px-8 py-3 border-2 border-cyan-600 text-cyan-600 rounded-lg hover:bg-cyan-50 transition-colors duration-200 flex items-center gap-2">
+            <a 
+              href="/cv.pdf" 
+
+              download="Mohamed Mondir BALALI CV.pdf"
+              className="px-8 py-3 border-2 border-cyan-600 text-cyan-600 rounded-lg hover:bg-cyan-50 transition-colors duration-200 flex items-center gap-2"
+            >
               <Download size={20} />
               Download CV
-            </button>
+            </a>
           </div>
 
           <div className="flex gap-6 justify-center">
@@ -267,8 +272,7 @@ const Hero = () => {
             <a href={portfolioData.personal.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-cyan-600 transition-colors">
               <Linkedin size={24} />
             </a>
-            <a href="https://github.com/Med020"
-             target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-cyan-600 transition-colors">
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-cyan-600 transition-colors">
               <Github size={24} />
             </a>
           </div>
