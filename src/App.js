@@ -528,7 +528,6 @@ export default function Portfolio() {
       <Experience isVisible={visibleSections.has('experience')} />
       <Education isVisible={visibleSections.has('education')} />
       <Projects isVisible={visibleSections.has('projects')} />
-      <Contact isVisible={visibleSections.has('contact')} />
       <Footer />
       
       <style jsx>{`
